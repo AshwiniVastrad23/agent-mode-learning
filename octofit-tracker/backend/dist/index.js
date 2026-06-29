@@ -1,12 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import { Activity, LeaderboardEntry, Team, User, Workout } from './models.js';
+import { connectToDatabase } from './config/database.js';
 dotenv.config();
 const app = express();
 const port = Number(process.env.PORT ?? 8000);
-const mongoUri = process.env.MONGO_URI ?? 'mongodb://127.0.0.1:27017/octofit_db';
 const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
     ? `https://${codespaceName}-8000.app.github.dev`
@@ -39,8 +38,7 @@ app.get(['/api/workouts', '/api/workouts/'], async (_req, res) => {
     const workouts = await Workout.find({}).lean();
     sendCollectionResponse('workouts', workouts, res);
 });
-mongoose
-    .connect(mongoUri)
+connectToDatabase()
     .then(() => console.log('MongoDB connected'))
     .catch((error) => console.error('MongoDB connection error:', error));
 app.listen(port, '0.0.0.0', () => {
