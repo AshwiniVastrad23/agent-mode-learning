@@ -8,6 +8,11 @@ export const getApiBaseUrl = () => {
   return 'http://localhost:8000';
 };
 
+export const buildApiUrl = (resource) => {
+  const baseUrl = getApiBaseUrl();
+  return `${baseUrl}/api/${resource}/`;
+};
+
 export const getCollectionData = (payload) => {
   if (Array.isArray(payload)) {
     return payload;
