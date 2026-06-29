@@ -8,9 +8,11 @@ dotenv.config();
 
 const getApiBaseUrl = (serverPort: number) => {
   const codespaceName = process.env.CODESPACE_NAME?.trim();
-  return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : `http://localhost:${serverPort}`;
+  if (codespaceName) {
+    return `https://${codespaceName}-8000.app.github.dev`;
+  }
+
+  return `http://localhost:${serverPort}`;
 };
 
 const app = express();
