@@ -10,10 +10,10 @@ function Activities() {
     const loadActivities = async () => {
       try {
         const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
-        const apiBaseUrl = codespaceName
-          ? `https://${codespaceName}-8000.app.github.dev`
-          : 'http://localhost:8000';
-        const response = await fetch(`${apiBaseUrl}/api/activities/`);
+        const apiUrl = codespaceName
+          ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
+          : 'http://localhost:8000/api/activities/';
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error('Unable to load activities');
         }
